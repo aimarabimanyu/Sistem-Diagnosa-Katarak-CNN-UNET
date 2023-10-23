@@ -27,17 +27,21 @@ Untuk diagnosa katarak pada mata, dapat dilakukan dengan menggunakan alat slit l
 
 ### Problem Statements
 - Berdasarkan jenis2 katarak yang ada, katarak mana yang akan dideteksi?
-- Bagaimana memisahkan gambar mata menjadi fokus pada area pupil?
+- Bagaimana memisahkan gambar mata agar fokus pada area pupil?
 - Bagaimana melakukan ekstraksi fitur dari gambar mata?
 - Bagaimana memprediksi jenis katarak berdasarkan fitur yang sudah diekstraksi?
 
 ### Goals
-- Mengetahui faktor yang paling berpengaruh terhadap harga penutupan saham United Tractors.
-- Membuat model machine learning yang mampu untuk memprediksi harga penutupan dengan akurat berdasarkan data yang ada.
+- Mendeteksi jenis katarak berdasarkan tingkat keparahan katarak.
+- Membuat model tersendiri yang mampu memisahkan area pupil dari gambar mata.
+- Membuat model menggunakan yang mampu melakukan ekstraksi fitur dari gambar mata.
+- Membuat kesatuan model dari yang sudah dibuat sebelumnya dan untuk memprediksi jenis katarak berdasarkan fitur yang sudah diekstraksi.
 
 ### Solution statements
-- Melakukan ekplorasi data untuk mengetahui faktor yang paling berpengaruh terhadap harga penutupan saham United Tractors seperti korelasi dan deskripsi statistik data.
-- Melakukan pemodelan menggunakan beberapa model yaitu linear regression, K-Nearest Neighbours, Ramdom Forest, dan Adaptive Boosting.
+- Menggunakan tingkat keparahan yaitu mata normal, katarak imatur, dan katarak matur.
+- Melakukan pemodelan dengan menggunakan U-Net untuk memisahkan area pupil dari gambar mata.
+- Melakukan pemodelan dengan menggunakan Convolutional Neural Network (CNN) untuk melakukan ekstraksi fitur dari gambar mata.
+- Menggunakan Artificial Neural Network (ANN) untuk memprediksi jenis katarak berdasarkan fitur yang sudah diekstraksi.
 
 ## Data Understanding
 
