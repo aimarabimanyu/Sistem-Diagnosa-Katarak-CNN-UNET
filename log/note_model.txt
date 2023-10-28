@@ -1,0 +1,3 @@
+Note:
+> val_accuracy masih spike turun selisih +- 0.2 & val_loss spike naik up to 1
+  - steps_per_epoch harus tinggi untuk mengurangi loss
