@@ -9,13 +9,13 @@ import os
 def inference_model(frame):
     CLASS_NAMES = ['mild', 'normal', 'severe']
 
-    # Load TFLite model and allocate tensors.
+    # Load TFLite Model and Allocate Tensors.
     interpreter_segmentation = tflite.Interpreter(model_path="models/model1.tflite")
     interpreter_segmentation.allocate_tensors()
     interpreter_classification = tflite.Interpreter(model_path="models/model2.tflite")
     interpreter_classification.allocate_tensors()
 
-    # Get height and width
+    # Get Height and Width
     _, height, width, _ = interpreter_segmentation.get_input_details()[0]['shape']
 
     # Load Image from Path and Resize
@@ -57,50 +57,50 @@ def inference_model(frame):
 
 def update_image():
     while True:
-        # Membaca frame dari kamera
+        # Read Frame and Condition from Camera
         ret, frame = cam.read()
 
         if ret:
-            # Mengubah ukuran frame menjadi 480x320
+            # Resize Frame to 480x320
             frame = cv2.resize(frame, (480, 320))
 
-            # Mengubah gambar OpenCV menjadi gambar PIL
+            # Convert CV Image to PIL Image
             image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
-            # Mengubah gambar PIL menjadi gambar Tkinter
+            # Convert PIL Image to Tkinter Image
             image = ImageTk.PhotoImage(image)
 
-            # Menampilkan gambar di label
+            # Show Image in Label
             label.config(image=image)
             label.image = image
 
 def capture_image():
-    # Membaca frame dari kamera
+    # Read Frame and Condition from Camera
     ret, frame = cam.read()
 
     if ret:
-        # Melakukan inferensi model
+        # Inference Model
         result = inference_model(frame)
 
-        # Mengubah ukuran frame menjadi 480x320
+        # Resize Frame to 380x220
         frame = cv2.resize(frame, (380, 220))
 
-        # Membuka jendela baru untuk menampilkan hasil
+        # Open New Window
         new_window = tk.Toplevel(window)
         new_label = tk.Label(new_window)
         new_label.pack()
 
-        # Mengubah gambar OpenCV menjadi gambar PIL
+        # Convert CV Image to PIL Image
         image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
-        # Mengubah gambar PIL menjadi gambar Tkinter
+        # Convert PIL Image to Tkinter Image
         image = ImageTk.PhotoImage(image)
 
-        # Menampilkan gambar di label baru
+        # Show Image in Label
         new_label.config(image=image)
         new_label.image = image
 
-        # Menampilkan hasil prediksi
+        # Show Prediction Result on Window
         result_label = tk.Label(new_window, text=str(result))
         result_label.pack()
 
@@ -114,34 +114,35 @@ def stop_button():
     # Stop the script
     os._exit(0)
 
-# Membuat jendela Tkinter
+# Build Tkinter Window
 window = tk.Tk()
 window.title("Model Inference App")
 window.geometry("480x320")
 
-# Membuat label untuk menampilkan gambar
+# Build Label to Show Image
 label = tk.Label(window)
 label.pack()
 
-# Membuat frame untuk menampung tombol
+# Build Button Frame
 button_frame = tk.Frame(window)
 button_frame.place(relx=0.5, rely=0.9, anchor='center')
 
-# Membuat tombol untuk capture dan stop
+# Build Capture and Stop Button
 button_capture = tk.Button(button_frame, text="Capture", command=capture_image)
 button_capture.pack(side="left", padx=5, expand=True)
 button_stop = tk.Button(button_frame, text="Stop", command=stop_button)
 button_stop.pack(side="right", padx=5, expand=True)
 
-# Membuka koneksi ke kamera USB
+# Open Camera Connection
 cam = cv2.VideoCapture(0)
 
-# Membuat thread untuk memperbarui gambar
+# Build Thread to Update Image
 thread = Thread(target=update_image)
 thread.start()
 
-# Menjalankan loop utama Tkinter
+# Mainloop Tkinter Window
 window.mainloop()
 
-# Melepaskan koneksi ke kamera setelah jendela ditutup
+# Close Camera Connection and Stop Script
 cam.release()
+os._exit(0)
