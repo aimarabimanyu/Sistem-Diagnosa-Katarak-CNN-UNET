@@ -104,16 +104,6 @@ def capture_image():
         result_label = tk.Label(new_window, text=str(result))
         result_label.pack()
 
-def stop_button():
-    # Close the window
-    window.destroy()
-
-    # Release the camera connection
-    cam.release()
-
-    # Stop the script
-    os._exit(0)
-
 # Build Tkinter Window
 window = tk.Tk()
 window.title("Model Inference App")
@@ -129,9 +119,7 @@ button_frame.place(relx=0.5, rely=0.9, anchor='center')
 
 # Build Capture and Stop Button
 button_capture = tk.Button(button_frame, text="Capture", command=capture_image)
-button_capture.pack(side="left", padx=5, expand=True)
-button_stop = tk.Button(button_frame, text="Stop", command=stop_button)
-button_stop.pack(side="right", padx=5, expand=True)
+button_capture.pack(side="left", expand=True)
 
 # Open Camera Connection
 cam = cv2.VideoCapture(0)
