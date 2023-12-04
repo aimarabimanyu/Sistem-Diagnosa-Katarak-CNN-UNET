@@ -7,7 +7,7 @@ from threading import Thread
 import os
 
 def inference_model(frame):
-    CLASS_NAMES = ['mild', 'normal', 'severe']
+    CLASS_NAMES = ['immature', 'mature', 'normal']
 
     # Load TFLite Model and Allocate Tensors.
     interpreter_segmentation = tflite.Interpreter(model_path="models/model1.tflite")
