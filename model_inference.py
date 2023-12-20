@@ -5,9 +5,12 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from threading import Thread
 import os
+import time
+import datetime
 
 def inference_model(frame):
     CLASS_NAMES = ['immature', 'mature', 'normal']
+    start_time = time.time()
 
     # Load TFLite Model and Allocate Tensors.
     interpreter_segmentation = tflite.Interpreter(model_path="models/model1.tflite")
@@ -40,8 +43,6 @@ def inference_model(frame):
     multipy_image = cv2.bitwise_and(multipy_image, multipy_image, mask=output_segmentation)
     multipy_image = cv2.cvtColor(multipy_image, cv2.COLOR_BGR2RGB)
 
-    cv2.imwrite("test.jpg", multipy_image)
-
     # Add Batch Dimension for Predicted Image
     input_image = np.expand_dims(multipy_image, axis=0).astype(np.float32)
 
@@ -52,6 +53,13 @@ def inference_model(frame):
     # Get Output
     output_classification = np.squeeze(interpreter_classification.get_tensor(interpreter_classification.get_output_details()[0]['index']))
     output_classification = CLASS_NAMES[np.argmax(output_classification)]
+    end_time = time.time()
+
+    total_time = end_time - start_time
+    now = datetime.datetime.now()
+    filename = now.strftime('%Y%m%d_%H%M%S')
+    cv2.imwrite("hasil/pasien" + filename + "_" + output_classification + "_kom_" + str(total_time) + ".jpg", multipy_image)
+    cv2.imwrite("hasil/pasien" + filename + "_" + output_classification + "_kom_" + str(total_time) + "_clean" + ".jpg", frame)
 
     return output_classification
 
