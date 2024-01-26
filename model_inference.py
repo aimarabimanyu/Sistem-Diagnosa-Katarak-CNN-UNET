@@ -36,7 +36,7 @@ def inference_model(frame):
 
     # Get Output
     output_segmentation = np.squeeze(interpreter_segmentation.get_tensor(interpreter_segmentation.get_output_details()[0]['index']))
-    output_segmentation = np.where(output_segmentation > 0.9, 1, 0).astype(np.uint8)
+    output_segmentation = np.where(output_segmentation > 0.6, 1, 0).astype(np.uint8)
 
     # Fuse Image with Segmentation Mask with Bitwise Operation
     multipy_image = cv2.resize(frame, (width, height))
